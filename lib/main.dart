@@ -19,14 +19,21 @@ class _TepState extends State<Tep> {
   var controladorNumero1 = TextEditingController();
   var controladorNumero2 = TextEditingController();
 
+  var sesionAbierta = false;
+  bool luzEncendida = false;
+  String colorLuz = "";
+  double intensidad = 1;
+  Color coloract = Colors.blue;
 
   var numero1 = 0;
   var numero2 = 0;
   var result = 0;
 
+
   @override
   Widget build(BuildContext context) => MaterialApp(
     home: Scaffold(
+
         appBar: AppBar(title: Text("Controllers"),),
         body :Padding(
             padding: EdgeInsets.all(8.8),
@@ -60,6 +67,98 @@ class _TepState extends State<Tep> {
 
                   SizedBox( height: 20,),
 
+                  Row(
+                    children: [
+                      Text("Desea mantener la sesion abierta ?"),
+
+                      Checkbox(
+                          value: sesionAbierta,
+                          onChanged: (value) {
+                            setState(() {
+                              sesionAbierta = value!;
+                              print(sesionAbierta);
+                            });
+                          }),
+                    ],
+                  ),
+
+                  CheckboxListTile(
+                    title: Text("¿Desea  mantener la sesión abierta?"),
+                      value: sesionAbierta,
+                      onChanged: (value){
+                        setState(() {
+                          sesionAbierta = value!;
+                        });
+                      }
+                  ),
+
+                  Row(
+                    children: [
+                      Text("Luz encendida"),
+                      Switch(
+                          value: luzEncendida,
+                          onChanged: (value){
+                            setState(() {
+                              luzEncendida = value;
+                            });
+                          }
+                      ),
+                    ],
+                  ),
+
+                  SwitchListTile(
+                    title: Text("Luz encendida"),
+                      value: luzEncendida,
+                      onChanged: (value){
+                        setState(() {
+                          luzEncendida = value;
+                        });
+                      }),
+                  Text("Color de la luz"),
+
+                  RadioListTile(
+                      title: Text("Luz Roja"),
+                      value: "Luz roja",
+                      groupValue: colorLuz,
+                      onChanged:  (value){setState(() {
+                        colorLuz = value.toString();
+                        print(colorLuz);
+                      });
+                      }),
+                  RadioListTile(
+                    title: Text("LuzVerde"),
+                      value: "Luz verde",
+                      groupValue: colorLuz,
+                      onChanged:  (value){setState(() {
+                        colorLuz = value.toString();
+                        print(colorLuz);
+                    });
+                  }),
+                  RadioListTile(
+                      title: Text("Luz Azul"),
+                      value: "Luz azul",
+                      groupValue: colorLuz,
+                      onChanged:  (value){setState(() {
+                        colorLuz = value.toString();
+                        print(colorLuz);
+                      });
+                      }),
+                  Text("intensidad"),
+                  Slider(
+                      value: intensidad,
+                      min: 1.0,
+                      max: 3.0,
+                      divisions: 2,
+                      activeColor: coloract,
+                      label: intensidad.toString(),
+                      onChanged: (value){
+                        setState(() {
+                          intensidad = value;
+                          print(intensidad);
+                          intensidad >= 2 ?  coloract = Colors.red: coloract = Colors.blue ;
+
+                        });
+                      }),
 
                   SizedBox(
                       width:  double.infinity,
@@ -72,8 +171,6 @@ class _TepState extends State<Tep> {
                             numero2 = int.parse(controladorNumero2.text) ;
                             result = numberReturn(numero1,numero2,1);
                           });
-
-
                         },
                       )
                   ),
